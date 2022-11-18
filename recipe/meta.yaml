@@ -30,9 +30,10 @@ requirements:
     - setuptools
     - libblas
     - liblapack
+    - numpy >=1.14
   run:
     - python
-    - numpy >=1.14
+    - {{ pin_compatible('numpy') }}
 
 test:
   imports:
