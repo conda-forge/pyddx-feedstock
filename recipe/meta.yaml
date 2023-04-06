@@ -1,5 +1,5 @@
 {% set name = "pyddx" %}
-{% set version = "0.2.0" %}
+{% set version = "0.3.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/ddsolvation/ddx/archive/v{{ version }}.tar.gz
-  sha256: 095b73e6b246b78dfe9e3cc8f5bd4e8a1d9ce38d66bf0eeaacacf57d5ff10f62
+  sha256: 1dd6576d25a9bbee8aaae265c89635c62662026f4449cecc4a093e4e5b9461a4
 
 build:
   skip: true  # [win or py<38]
@@ -33,6 +33,7 @@ requirements:
     - numpy >=1.14
   run:
     - python
+    - scipy >=1.8
     - {{ pin_compatible('numpy') }}
 
 test:
