@@ -256,4 +256,5 @@ Feedstock Maintainers
 =====================
 
 * [@mfherbst](https://github.com/mfherbst/)
+* [@mnottoli](https://github.com/mnottoli/)
 
