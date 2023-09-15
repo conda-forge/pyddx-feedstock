@@ -1,5 +1,5 @@
 {% set name = "pyddx" %}
-{% set version = "0.5.1" %}
+{% set version = "0.6.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/ddsolvation/ddx/archive/v{{ version }}.tar.gz
-  sha256: 9693720edf9e08cbbc9fc51549edecb53498097c7f32a5ab1ee9fec8ffee0bcf
+  sha256: b86e05e3c39b8ef977036a4b84c2a845b27ae8f497ba66d97fd4969279d3c24f
 
 build:
   skip: true  # [win or py<38]
