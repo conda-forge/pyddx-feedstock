@@ -12,7 +12,7 @@ source:
 build:
   skip: true  # [win or py<38]
   script: {{ PYTHON }} -m pip install . -vv
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -22,6 +22,7 @@ requirements:
     - pybind11                               # [build_platform != target_platform]
     - {{ compiler('cxx') }}
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - {{ compiler('fortran') }}
     - make
     - cmake >=3.14
@@ -38,7 +39,6 @@ requirements:
   run:
     - python
     - scipy >=1.8
-    - {{ pin_compatible('numpy') }}
 
 test:
   imports:
