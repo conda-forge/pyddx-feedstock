@@ -11,7 +11,7 @@ source:
 
 build:
   skip: true  # [win or py<38]
-  script: {{ PYTHON }} -m pip install . -vv
+  script: "{{ PYTHON }} -m pip install . -vv --no-deps --prefix=$PREFIX"
   number: 0
 
 requirements:
