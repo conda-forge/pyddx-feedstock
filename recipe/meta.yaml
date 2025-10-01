@@ -13,21 +13,17 @@ build:
   skip: true  # [win or py<38]
   script: |
     echo "=== Build debug information ==="
-    find . -name "*pyddx*" -type f 2>/dev/null || echo "No pyddx files found before build"
+    echo "Build platform: {{ build_platform }}"
+    echo "Target platform: {{ target_platform }}"
 
     {{ PYTHON }} -m pip install . -vv
 
-    echo "=== After build - checking what was created ==="
-    find . -name "*pyddx*" -type f 2>/dev/null || echo "No pyddx files found after build"
+    echo "=== Checking the actual built library ==="
+    find . -name "*pyddx*.so" -type f -exec file {} \; 2>/dev/null || echo "No .so files found"
+    find {{ PREFIX }}/lib/python*/site-packages/ -name "*pyddx*.so" -type f -exec file {} \; 2>/dev/null || echo "No .so files in site-packages"
 
-    # Check the actual site-packages directory
-    echo "=== Checking site-packages ==="
-    {{ PYTHON }} -c "import site; print('site-packages:', site.getsitepackages())"
-    find {{ PREFIX }}/lib/python*/site-packages/ -name "*pyddx*" -type f 2>/dev/null || echo "No pyddx files in site-packages"
-
-    # Try to list the actual extension module
-    echo "=== Attempting to import ==="
-    {{ PYTHON }} -c "import pyddx; print('SUCCESS: Import worked!'); print(pyddx.__file__)" || echo "IMPORT FAILED"
+    echo "=== Library dependencies ==="
+    find {{ PREFIX }}/lib/python*/site-packages/ -name "*pyddx*.so" -type f -exec ldd {} \; 2>/dev/null || echo "Cannot check dependencies"
   number: 0
 
 requirements:
