@@ -18,12 +18,25 @@ build:
 
     {{ PYTHON }} -m pip install . -vv
 
-    echo "=== Checking the actual built library ==="
-    find . -name "*pyddx*.so" -type f -exec file {} \; 2>/dev/null || echo "No .so files found"
-    find {{ PREFIX }}/lib/python*/site-packages/ -name "*pyddx*.so" -type f -exec file {} \; 2>/dev/null || echo "No .so files in site-packages"
+    echo "=== Listing ALL files in build and site-packages ==="
+    echo "--- Build directory contents ---"
+    find ./build -type f 2>/dev/null | head -20 || echo "No build dir"
+    echo "--- Site-packages contents ---"
+    find {{ PREFIX }}/lib/python*/site-packages/ -type f 2>/dev/null | head -20 || echo "No site-packages files"
 
-    echo "=== Library dependencies ==="
-    find {{ PREFIX }}/lib/python*/site-packages/ -name "*pyddx*.so" -type f -exec ldd {} \; 2>/dev/null || echo "Cannot check dependencies"
+    echo "=== Checking if .so file exists but with different name ==="
+    {{ PYTHON }} -c "
+    import os
+    import site
+    for sp in site.getsitepackages():
+        print(f'Checking: {sp}')
+        for f in os.listdir(sp):
+            if 'pyddx' in f:
+                print(f'  Found: {f}')
+                full_path = os.path.join(sp, f)
+                if os.path.isfile(full_path):
+                    print(f'    Is file: {full_path}')
+    "
   number: 0
 
 requirements:
