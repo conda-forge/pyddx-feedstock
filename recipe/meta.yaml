@@ -7,7 +7,7 @@ package:
 
 source:
   git_url: https://github.com/ddsolvation/ddX.git
-  git_rev: 7cb3fd7f4f4cd7b6ee9b4dba1383abefe898756d
+  git_rev: 37c929ac3e7772f8fc47cbc12c67f4be63fcd92b
 
 build:
   skip: true  # [win or py<38]
