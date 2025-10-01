@@ -6,12 +6,28 @@ package:
   version: {{ version }}
 
 source:
-  git_url: https://github.com/ddsolvation/ddX.git
-  git_rev: 235c97cd73d12dbfd2cfc4439b25d9558cbd8f01
+  url: https://github.com/ddsolvation/ddx/archive/v{{ version }}.tar.gz
+  sha256: 70dd8acb77491d950d8a0d6fb28abb895b308d704aa207f70b8979121bf282be
 
 build:
   skip: true  # [win or py<38]
-  script: "{{ PYTHON }} -m pip install . -vv --no-deps --prefix=$PREFIX"
+  script: |
+    echo "=== Build debug information ==="
+    find . -name "*pyddx*" -type f 2>/dev/null || echo "No pyddx files found before build"
+
+    {{ PYTHON }} -m pip install . -vv
+
+    echo "=== After build - checking what was created ==="
+    find . -name "*pyddx*" -type f 2>/dev/null || echo "No pyddx files found after build"
+
+    # Check the actual site-packages directory
+    echo "=== Checking site-packages ==="
+    {{ PYTHON }} -c "import site; print('site-packages:', site.getsitepackages())"
+    find {{ PREFIX }}/lib/python*/site-packages/ -name "*pyddx*" -type f 2>/dev/null || echo "No pyddx files in site-packages"
+
+    # Try to list the actual extension module
+    echo "=== Attempting to import ==="
+    {{ PYTHON }} -c "import pyddx; print('SUCCESS: Import worked!'); print(pyddx.__file__)" || echo "IMPORT FAILED"
   number: 0
 
 requirements:
