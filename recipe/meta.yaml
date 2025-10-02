@@ -6,8 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/ddsolvation/ddx/archive/v{{ version }}.tar.gz
-  sha256: 70dd8acb77491d950d8a0d6fb28abb895b308d704aa207f70b8979121bf282be
+  git_url: https://github.com/ddsolvation/ddX.git
+  git_rev: 1978d7a5a4593407c8a16bab491c36cd9b1d79a3
 
 build:
   skip: true  # [win or py<38]
