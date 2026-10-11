@@ -30,6 +30,7 @@ requirements:
     - libgomp      # [linux]
   host:
     - python
+    - libpython    # [unix]
     - pip
     - pybind11 >=2.6
     - setuptools
